@@ -6,7 +6,7 @@ var movement = Vector2(0, 0)
 var score = 0
 signal slip
 
-var is_slipped
+var is_slipped = false
 func _on_map_merged(value):
 	score += value
 
@@ -25,7 +25,7 @@ func _input(event):
 		emit_signal("slip", Vector2(1, 0))
 		
 	#Android (iOS is NOT my business)
-	if event.is_action_released("click"):
+	if !Input.is_mouse_button_pressed(1):
 		is_slipped = false
 		movement = Vector2(0, 0)
 	if event is InputEventScreenDrag and !is_slipped:
