@@ -7,11 +7,11 @@ func place():
 		for j in range(0, 4):
 			if get_cell(i, j) == -1:
 				placeable.append(Vector2(i, j))
-	
-	if randi() % 10 < 3:
-		set_cellv(placeable[randi() % placeable.size()], 1)
-	else:
-		set_cellv(placeable[randi() % placeable.size()], 0)
+	if placeable.size() != 0:
+		if randi() % 10 < 3:
+			set_cellv(placeable[randi() % placeable.size()], 1)
+		else:
+			set_cellv(placeable[randi() % placeable.size()], 0)
 	
 func _ready():
 	place()
