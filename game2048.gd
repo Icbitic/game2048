@@ -37,7 +37,7 @@ func place():
 func _ready():
 	place()
 	
-func _input(event):
+remotesync func _input(event):
 	#Desktop
 	if event.is_action_pressed("ui_up"):
 		emit_signal("slip", Vector2(0, -1))
