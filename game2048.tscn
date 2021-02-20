@@ -173,15 +173,15 @@
 [node name="Game2048" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2( 32, 16 )
-current = true
-zoom = Vector2( 0.2, 0.2 )
-
-[node name="map" type="TileMap" parent="."]
+[node name="2048Render" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
 script = ExtResource( 1 )
-[connection signal="slip" from="." to="map" method="_on_Game2048_slip"]
-[connection signal="merged" from="map" to="." method="_on_map_merged"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( 32, 16 )
+current = true
+zoom = Vector2( 0.2, 0.2 )
+[connection signal="merged" from="." to="." method="_on_Game2048_merged"]
+[connection signal="slip" from="." to="." method="_on_Game2048_slip"]
