@@ -1,7 +1,7 @@
 extends Node2D
 
 const slip_edge = 100
-
+enum {SLIP_UP, SLIP_DOWN, SLIP_LEFT, SLIP_RIGHT}
 var movement = Vector2(0, 0)
 var score = 0
 signal slip
@@ -37,19 +37,32 @@ func place():
 func _ready():
 	place()
 	
-remotesync func _input(event):
-	#Desktop
-	if event.is_action_pressed("ui_up"):
+remotesync func input(key):
+	if key == SLIP_UP:
 		emit_signal("slip", Vector2(0, -1))
 		
-	if event.is_action_pressed("ui_down"):
+	if key == SLIP_DOWN:
 		emit_signal("slip", Vector2(0, 1))
 		
-	if event.is_action_pressed("ui_left"):
+	if key == SLIP_LEFT:
 		emit_signal("slip", Vector2(-1, 0))
 		
-	if event.is_action_pressed("ui_right"):
+	if key == SLIP_RIGHT:
 		emit_signal("slip", Vector2(1, 0))
+	
+func _input(event):
+	#Desktop
+	if event.is_action_pressed("ui_up"):
+		input(SLIP_UP)
+		
+	if event.is_action_pressed("ui_down"):
+		input(SLIP_DOWN)
+		
+	if event.is_action_pressed("ui_left"):
+		input(SLIP_LEFT)
+		
+	if event.is_action_pressed("ui_right"):
+		input(SLIP_RIGHT)
 		
 	#Android (iOS is NOT my business)
 	if !Input.is_mouse_button_pressed(1):
@@ -59,22 +72,22 @@ remotesync func _input(event):
 		movement += event.relative
 	
 	if movement.y <= -slip_edge and !is_slipped:
-		emit_signal("slip", Vector2(0, -1))
+		input(SLIP_UP)
 		movement = Vector2(0, 0)
 		is_slipped = true
 		
 	if movement.y >= slip_edge and !is_slipped:
-		emit_signal("slip", Vector2(0, 1))
+		input(SLIP_DOWN)
 		movement = Vector2(0, 0)
 		is_slipped = true
 		
 	if movement.x <= -slip_edge and !is_slipped:
-		emit_signal("slip", Vector2(-1, 0))
+		input(SLIP_LEFT)
 		movement = Vector2(0, 0)
 		is_slipped = true
 		
 	if movement.x >= slip_edge and !is_slipped:
-		emit_signal("slip", Vector2(1, 0))
+		input(SLIP_RIGHT)
 		movement = Vector2(0, 0)
 		is_slipped = true
 		
